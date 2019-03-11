@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- bootstrap-->
+    <link th:href="@{/bootstrap-4.2.1-dist/css/bootstrap.css}"
+          rel="stylesheet"
+          type="text/css">
+    <script th:src="@{/bootstrap-4.2.1-dist/js/bootstrap.js}"></script>
+
+    <link th:href="@{/style.css}"
+          rel="stylesheet"
+          type="text/css"
+          media="all">
+    <!-- -end-->
+</head>
+<body>
+<div style="text-align: center">
+<h1 STYLE="alignment: center">K U R S    W A L U T</h1>
+</div>
+
+
+    <form th:action="@{/}" method="post" style="alignment: center">
+        <div class="container" style="width:auto; alignment: center">
+        <select class="form-control" name="currencyCode" style="alignment:center;width: 500px">
+            <option>USD</option>
+            <option>EUR</option>
+            <option>GBP</option>
+            <option>CHF</option>
+        </select>
+        <!--<input name="currencyCode" type="text" data-th-default="USD" placeholder="Podaj kod waluty">-->
+        <button type="submit" value="Wyślij" style="width: 500px">Wyślij</button>
+        </div>
+        <!---->
+    </form>
+    <hr>
+<h3>Aktualny kurs wybranej waluty </h3>
+    <table class="table table-striped">
+        <tr>
+            <th>Data tabeli</th>
+            <th>Numer tabeli</th>
+            <th>Nazwa waluty</th>
+            <th>Kurs waluty</th>
+        </tr>
+        <tr>
+            <td th:if="${effectiveDate!=null}" th:text="${effectiveDate.getRates().get(0).getEffectiveDate()}"></td>
+            <td th:if="${no!=null}" th:text="${no.getRates().get(0).getNo()}"></td>
+            <td th:if="${nameCurrency!=null}" th:text="${nameCurrency.getCurrency()}"></td>
+            <td th:if="${mid!=null}" th:text="${mid.getRates().get(0).getMid()}"></td>
+        </tr>
+    </table>
+<hr>
+
+<h3>Seria ostatnich 10 notowań </h3>
+
+<ol th:if="${currencyList != null}">
+    <li th:each="list : ${currencyList.getRates()}" th:text="${list.getNo() + ': ' + list.getEffectiveDate()+': '+list.getMid()}"></li>
+</ol>
+</body>
+</html>
